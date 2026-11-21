@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LangGraph 架构实验台</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="shell heading">
+        <div>
+          <p class="eyebrow">LANGGRAPH</p>
+          <h1>Agent 架构实验台</h1>
+        </div>
+        <span id="connection" class="connection" role="status">连接中</span>
+      </div>
+    </header>
+    <main class="shell">
+      <div class="modes" aria-label="选择架构">
+        <button type="button" data-mode="supervisor" aria-pressed="true"><strong>Supervisor</strong><span>客服分流与多轮流程</span></button>
+        <button type="button" data-mode="manual" aria-pressed="false"><strong>手写 ReAct</strong><span>显式决策与工具节点</span></button>
+        <button type="button" data-mode="prebuilt" aria-pressed="false"><strong>预置 Agent</strong><span>用 create_agent 编排工具</span></button>
+      </div>
+      <div class="workspace">
+        <section class="panel conversation">
+          <div class="panel-heading">
+            <div>
+              <h2>会话</h2>
+              <p id="mode-description">技术支持、销售和账单由 Supervisor 分流。</p>
+            </div>
+            <button type="button" id="reset" class="quiet">新会话</button>
+          </div>
+          <div id="messages" class="messages" role="log" aria-live="polite">
+            <p class="empty">选一个示例，或输入你的问题。</p>
+          </div>
+          <div id="quick-actions" class="actions" aria-label="模拟退款操作" hidden></div>
+          <div id="examples" class="actions examples" aria-label="示例问题"></div>
+          <form id="question-form">
+            <label class="sr-only" for="question">输入问题</label>
+            <input id="question" name="question" required maxlength="1200" placeholder="例如，专业版 3 个席位买 2 个月，多少钱？">
+            <button class="primary" id="send" type="submit">运行</button>
+          </form>
+        </section>
+        <aside class="panel inspection" aria-label="本轮执行轨迹">
+          <div class="panel-heading">
+            <div>
+              <h2>执行轨迹</h2>
+              <p>决策节点与工具结果</p>
+            </div>
+            <span id="duration" class="duration"></span>
+          </div>
+          <ol id="steps" class="steps" aria-live="polite">
+            <li class="empty">运行后显示本轮调用顺序。</li>
+          </ol>
+        </aside>
+      </div>
+      <section class="panel comparison">
+        <div class="panel-heading">
+          <div>
+            <h2>同题比较</h2>
+            <p>三个架构使用同一个本地演示模型，逐一验证相同的五道问题。</p>
+          </div>
+          <button type="button" id="compare" class="quiet">运行对比</button>
+        </div>
+        <div id="comparison-results" aria-live="polite"></div>
+      </section>
+    </main>
+  </body>
+</html>
